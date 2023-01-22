@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { useState } from "react";
 import expensiveOperation from "../function.js";
 import "../styles/App.css";
@@ -9,13 +9,17 @@ const App = () => {
 
 const OptimizeTheOperation = () => {
   const [number, setNumber] = useState(1);
-  const array = expensiveOperation(number);
-  const submitHandler = (event) => {};
+  const [number1, setNumber1] = useState(number);
+  const array = expensiveOperation(number)
+  const submitHandler = (event) => {
+    event.preventDefault();
+    setNumber(number1)
+  };
   return (
     <div>
       Enter the number:
       <form onSubmit={submitHandler}>
-        <input id="num" defaultValue={number} />
+        <input id="num" defaultValue={number} onChange={(event)=>setNumber1(parseInt(event.target.value))}/>
         <button id="submit" type="submit">
           Click me
         </button>
@@ -31,4 +35,5 @@ const OptimizeTheOperation = () => {
   );
 };
 
-export default App;
+export default memo(App);
+
